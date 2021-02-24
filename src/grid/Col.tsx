@@ -8,7 +8,8 @@ export interface ColProps {
 const Col: React.FunctionComponent<ColProps> = (props: ColProps) => {
     const { text, width } = props;
     const widthClass = `width-${width}`;
-    return <div className={widthClass}>{text ? text : ''}</div>
+    const colClass = `column ${widthClass}`
+    return <div className={colClass}>{text ? text : ''}</div>
 }
 
 export default Col;
