@@ -13,7 +13,7 @@ interface GridProps {
 const Grid: React.FunctionComponent<GridProps> = (props: GridProps) => {
     const { cols } = props;
     // if no cols grid is invalid
-    if (typeof cols === undefined) {
+    if (typeof cols === undefined || cols.length === 0) {
         return <div>grid has no cols</div>
     }
 
