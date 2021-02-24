@@ -10,6 +10,8 @@ interface GridProps {
  * cols can contain text
  */
 
+const MAX_WIDTH: number = 12;
+
 const Grid: React.FunctionComponent<GridProps> = (props: GridProps) => {
     const { cols } = props;
     // if no cols grid is invalid
@@ -20,7 +22,7 @@ const Grid: React.FunctionComponent<GridProps> = (props: GridProps) => {
     // check sum of widths === 12 or return empty grid
     const gridWidth = cols.reduce((acc, col) => acc + (col.width || 0), 0);
     
-    if(gridWidth !== 12) {
+    if(gridWidth !== MAX_WIDTH) {
         return <div>grid width not valid</div>
     }
 
