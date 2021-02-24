@@ -1,9 +1,5 @@
 import * as React from 'react';
-
-interface ColProps {
-    width: number;
-    text?: string;
-}
+import Col, { ColProps } from './Col';
 
 interface GridProps {
     cols: ColProps[],
@@ -14,12 +10,6 @@ interface GridProps {
  * cols can contain text
  */
 
-const Col: React.FunctionComponent<ColProps> = (props: ColProps) => {
-    const { text, width } = props;
-    const widthClass = `width-${width}`;
-    return <div className={widthClass}>{text ? text : ''}</div>
-}
-
 const Grid: React.FunctionComponent<GridProps> = (props: GridProps) => {
     const { cols } = props;
     // if no cols grid is invalid
@@ -28,7 +18,7 @@ const Grid: React.FunctionComponent<GridProps> = (props: GridProps) => {
     }
 
     // check sum of widths === 12 or return empty grid
-    const gridWidth = cols.reduce((acc, col) => acc + (col.width), 0);
+    const gridWidth = cols.reduce((acc, col) => acc + (col.width || 0), 0);
     
     if(gridWidth !== 12) {
         return <div>grid width not valid</div>
