@@ -26,7 +26,7 @@ const Grid: React.FunctionComponent<GridProps> = (props: GridProps) => {
         return <div>grid width not valid</div>
     }
 
-    return <div className="grid">{cols.map(col => <Col {...col} />)}</div>;
+    return <div className="grid">{cols.map((col, index) => <Col key={index} {...col} />)}</div>;
 }
 
 export default Grid;

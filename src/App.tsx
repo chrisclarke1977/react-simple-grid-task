@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import DynamicGrid from './dynamic-grid';
 import Grid from './grid';
 import { ColProps } from './grid/Col';
 
@@ -13,6 +14,7 @@ function App() {
       <Grid cols={testGridInvalid} />
       <Grid cols={testGrid} />
       <Grid cols={testGridNoCols} />
+      <DynamicGrid />
     </div>
   );
 }
