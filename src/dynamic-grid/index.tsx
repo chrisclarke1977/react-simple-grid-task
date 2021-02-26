@@ -3,36 +3,51 @@ import Grid from '../grid';
 import { ColProps } from '../grid/Col';
 
 export interface DynamicGridProps {
-    width?: number;
-    text?: string;
+
 }
 
 const DynamicGrid: React.FunctionComponent<DynamicGridProps> = (props: DynamicGridProps) => {
-    const [cols, setCols] = React.useState<ColProps[]>([]);
-
+    const { useState, useEffect } = React;
+    const [cols, setCols] = useState<ColProps[]>([]);
+    const [exJson, setExJson] = useState({});
+    const [exHTML, setExHTML] = useState('<div></div>');
+    
     const onAdd = () => {
-        const newCols: ColProps[] = [...cols ,{ width: 4, text: "hi" }];
-        console.log("add col", cols, newCols);
-
+        const newCols: ColProps[] = [...cols, { width: 4, text: "hi" }];
+        newCols.map(i => i.width = Math.round(12 / (newCols.length))); // Adjust widths of cols
         setCols(newCols);
     }
     const onRemove = () => {
         const newCols: ColProps[] = cols;
         newCols.pop();
-        console.log("remove col", cols, newCols);
+        newCols.map(i => i.width = Math.round(12 / (newCols.length))); // Adjust widths of cols
         setCols(newCols);
     }
-    const jsonCols = () => JSON.stringify(cols);
-
-    React.useEffect(() => {
+    const exportHTML = () => {
+        setExHTML('<div></div>');
+    }
+    const exportJSON = () => {
+        const jsonCols = () => JSON.stringify(cols);
+        setExJson({ grid: jsonCols() });
+    }
+    
+    useEffect(() => {
         // Watch for changes in cols array
-    }, [jsonCols()]);
+    }, [cols.length]);
 
     return <div className="dynamic-grid">
         <h1>Dynamic Grid</h1>
         <button onClick={onAdd}>Add</button>
         <button onClick={onRemove}>remove</button>
+        <button onClick={exportHTML}>export html</button>
+        <button onClick={exportJSON}>export json</button>
         <Grid cols={cols} />
+        <div>
+            <h2>export html</h2>
+            <pre>{exHTML}</pre>
+            <h2>export json</h2>
+            <pre>{JSON.stringify(exJson)}</pre>
+        </div>
     </div>
 }
 
