@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { renderToString } from 'react-dom/server';
 import Grid from '../grid';
 import { ColProps } from '../grid/Col';
 
@@ -10,7 +11,7 @@ const DynamicGrid: React.FunctionComponent<DynamicGridProps> = (props: DynamicGr
     const { useState, useEffect } = React;
     const [cols, setCols] = useState<ColProps[]>([]);
     const [exJson, setExJson] = useState({});
-    const [exHTML, setExHTML] = useState('<div></div>');
+    // const [exHTML, setExHTML] = useState('<div></div>');
     
     const onAdd = () => {
         const newCols: ColProps[] = [...cols, { width: 4, text: "hi" }];
@@ -23,28 +24,28 @@ const DynamicGrid: React.FunctionComponent<DynamicGridProps> = (props: DynamicGr
         newCols.map(i => i.width = Math.round(12 / (newCols.length))); // Adjust widths of cols
         setCols(newCols);
     }
-    const exportHTML = () => {
-        setExHTML('<div></div>');
-    }
+    // const exportHTML = () => {
+    //     setExHTML('<div></div>');
+    // }
     const exportJSON = () => {
         const jsonCols = () => JSON.stringify(cols);
         setExJson({ grid: jsonCols() });
     }
     
     useEffect(() => {
-        // Watch for changes in cols array
+        // Watch for changes in cols array length
     }, [cols.length]);
 
     return <div className="dynamic-grid">
         <h1>Dynamic Grid</h1>
         <button onClick={onAdd}>Add</button>
         <button onClick={onRemove}>remove</button>
-        <button onClick={exportHTML}>export html</button>
-        <button onClick={exportJSON}>export json</button>
+        {/* <button onClick={exportHTML}>export html</button> */}
+        <button onClick={exportJSON}>export</button>
         <Grid cols={cols} />
         <div>
             <h2>export html</h2>
-            <pre>{exHTML}</pre>
+            <pre>{renderToString(<Grid cols={cols} />)}</pre>
             <h2>export json</h2>
             <pre>{JSON.stringify(exJson)}</pre>
         </div>
